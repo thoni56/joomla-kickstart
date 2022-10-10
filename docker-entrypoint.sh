@@ -1,6 +1,5 @@
 #!/bin/bash
 cp /restore/* /var/www/html
-
-echo "Hello!"
+chown -r www-data:www-data /var/www/html
 
 exec "$@"
