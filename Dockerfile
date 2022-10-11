@@ -15,6 +15,7 @@ VOLUME restore
 
 # Copy init scripts
 COPY docker-entrypoint.sh /entrypoint.sh
+COPY makedb.php /makedb.php
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["apache2", "-DFOREGROUND"]
