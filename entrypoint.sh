@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-JOOMLA_DB_PASSWORD=joomla
-
 uid="$(id -u)"
 gid="$(id -g)"
 
@@ -33,12 +31,20 @@ JOOMLA_DB_USER='joomla'
 JOOMLA_DB_PASSWORD='joomla'
 JOOMLA_DB_NAME='joomla'
 
+service mysql start
+
 # Ensure the MySQL Database is created
 php /makedb.php "$JOOMLA_DB_HOST" "$JOOMLA_DB_USER" "$JOOMLA_DB_PASSWORD" "$JOOMLA_DB_NAME"
 
 # Copy any backup files for restore
-cp /restore/* /var/www/html
-chown -r www-data:www-data /var/www/html
+if [ -d /restore ]
+then
+    if [ "(ls -A /restore)" ]
+    then
+	cp /restore/* /var/www/html
+	chown -R www-data:www-data /var/www/html
+    fi
+fi
 
 echo >&2 "========================================================================"
 echo >&2
