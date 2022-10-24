@@ -6,7 +6,7 @@ RUN set -ex; \
 	curl -o kickstart.zip -SL https://www.akeeba.com/download/akeeba-kickstart/7-1-2/kickstart-core-7-1-2-zip.raw ; \
 	unzip kickstart.zip -d /var/www/html ; \
 	chown -R www-data:www-data /var/www/html/* ; \
-	rm kickstart.zip
+	rm kickstart.zip index.html
 
 VOLUME restore
 
