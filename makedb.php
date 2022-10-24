@@ -49,7 +49,7 @@ if (!$mysql->query('CREATE DATABASE IF NOT EXISTS `' . $mysql->real_escape_strin
 	exit(1);
 }
 
-$mysql->query("GRANT ALL ON {$JOOMLA_DB_NAME} TO '{$JOOMLA_DB_USER}'@'{$JOOMLA_DB_HOST}';");
+$mysql->query("GRANT ALL ON {$JOOMLA_DB_NAME}.* TO '{$JOOMLA_DB_USER}'@'{$JOOMLA_DB_HOST}';");
 
 
 fwrite($stderr, "\nMySQL Database Created\n");
