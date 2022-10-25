@@ -1,4 +1,4 @@
-FROM thoni56/lamp:bionic-7.4
+FROM thoni56/lamp:focal-7.4
 LABEL maintainer="Thomas Nilefalk <thomas@nilefalk.se>"
 
 # Download Akeeba kickstart and extract to web volume
