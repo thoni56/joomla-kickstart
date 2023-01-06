@@ -10,6 +10,7 @@ all:
 	@echo "and 'make run', then navigate to localhost:8080 to start"
 	@echo "the restoration process."
 
+NAME = `ls restore/site*.jpa | awk -F\- '{ printf "%s-%s",$2,$3 }'
 
 run:
-	docker run -v $(PWD)/restore:/restore -p 8080:80 thoni56/joomla-kickstart:focal-7.4
+	docker run -v $(PWD)/restore:/restore -p 8080:80 $USER/joomla-kickstart:$UBUNTU-$PHP -n $NAME
