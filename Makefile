@@ -13,4 +13,4 @@ all:
 NAME = `ls restore/site*.jpa | awk -F\- '{ printf "%s-%s",$$2,$$3 }'`
 
 run:
-	docker run -v $(PWD)/restore:/restore -p 8080:80 $(USER)/joomla-kickstart:$(UBUNTU)-$(PHP) -n $(NAME)
+	docker run -v $(PWD)/restore:/restore -p 80:80 -p 443:443 --name $(NAME) $(USER)/joomla-kickstart:$(UBUNTU)-$(PHP)

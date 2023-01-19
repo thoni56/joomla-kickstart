@@ -10,11 +10,14 @@ RUN set -ex; \
 
 VOLUME restore
 
+# Set correct PHP version for the scripts
+RUN \
+    update-alternatives --set php /usr/bin/php$PHP
+    
 # Copy init scripts
 COPY entrypoint.sh /entrypoint.sh
 RUN \
     chmod 755 /entrypoint.sh
 COPY makedb.php /makedb.php
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["apachectl", "-DFOREGROUND"]
+ENTRYPOINT ["/entrypoint.sh", "$PHP"]

@@ -1,6 +1,5 @@
 #!/bin/bash
-set -e
-
+PHP=$1
 uid="$(id -u)"
 gid="$(id -g)"
 
@@ -31,10 +30,11 @@ JOOMLA_DB_USER='joomla'
 JOOMLA_DB_PASSWORD='joomla'
 JOOMLA_DB_NAME='joomla'
 
-service mysql start
+service mariadb start || true
+service mysql start || true
 
 # Ensure the MySQL Database is created
-php /makedb.php "$JOOMLA_DB_HOST" "$JOOMLA_DB_USER" "$JOOMLA_DB_PASSWORD" "$JOOMLA_DB_NAME"
+php$PHP /makedb.php "$JOOMLA_DB_HOST" "$JOOMLA_DB_USER" "$JOOMLA_DB_PASSWORD" "$JOOMLA_DB_NAME"
 
 # Copy any backup files for restore
 if [ -d /restore ]
@@ -45,6 +45,11 @@ then
 	chown -R www-data:www-data /var/www/html
     fi
 fi
+
+./generate_certs.sh
+a2enmod ssl
+a2enconf ssl
+service apache2 start
 
 echo >&2 "========================================================================"
 echo >&2
@@ -62,4 +67,6 @@ echo >&2 "JOOMLA_DB_NAME='$JOOMLA_DB_NAME'"
 echo >&2
 echo >&2 "========================================================================"
 
-exec "$@"
+service apache2 start
+
+sleep infinity
