@@ -1,9 +1,6 @@
 #!/bin/bash
 PHP=$1
-<<<<<<< HEAD
-=======
 
->>>>>>> 15083d0 (Look for existing administrator directory and then do no kickstart)
 uid="$(id -u)"
 gid="$(id -g)"
 
@@ -34,18 +31,10 @@ JOOMLA_DB_USER='joomla'
 JOOMLA_DB_PASSWORD='joomla'
 JOOMLA_DB_NAME='joomla'
 
-<<<<<<< HEAD
-service mariadb start || true
-service mysql start || true
-
-# Ensure the MySQL Database is created
-php$PHP /makedb.php "$JOOMLA_DB_HOST" "$JOOMLA_DB_USER" "$JOOMLA_DB_PASSWORD" "$JOOMLA_DB_NAME"
-=======
 service mysql start
 service mariadb start
 
 if [ ! -d administrator ] ; then
->>>>>>> 15083d0 (Look for existing administrator directory and then do no kickstart)
 
     # If there is no administrator directory then prepare for Kickstart
 
@@ -126,9 +115,4 @@ echo >&2 "======================================================================
 
 service apache2 start
 
-sleep infinity
-=======
-service apache2 start
-
 tail -f /var/log/apache2/error.log -f /var/log/apache2/access.log
->>>>>>> 15083d0 (Look for existing administrator directory and then do no kickstart)
