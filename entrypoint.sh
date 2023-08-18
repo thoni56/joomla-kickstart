@@ -1,5 +1,9 @@
 #!/bin/bash
 PHP=$1
+<<<<<<< HEAD
+=======
+
+>>>>>>> 15083d0 (Look for existing administrator directory and then do no kickstart)
 uid="$(id -u)"
 gid="$(id -g)"
 
@@ -30,22 +34,75 @@ JOOMLA_DB_USER='joomla'
 JOOMLA_DB_PASSWORD='joomla'
 JOOMLA_DB_NAME='joomla'
 
+<<<<<<< HEAD
 service mariadb start || true
 service mysql start || true
 
 # Ensure the MySQL Database is created
 php$PHP /makedb.php "$JOOMLA_DB_HOST" "$JOOMLA_DB_USER" "$JOOMLA_DB_PASSWORD" "$JOOMLA_DB_NAME"
+=======
+service mysql start
+service mariadb start
 
-# Copy any backup files for restore
-if [ -d /restore ]
-then
-    if [ "(ls -A /restore)" ]
+if [ ! -d administrator ] ; then
+>>>>>>> 15083d0 (Look for existing administrator directory and then do no kickstart)
+
+    # If there is no administrator directory then prepare for Kickstart
+
+    # Ensure the MySQL Database is created
+    php$PHP /makedb.php "$JOOMLA_DB_HOST" "$JOOMLA_DB_USER" "$JOOMLA_DB_PASSWORD" "$JOOMLA_DB_NAME"
+
+    # Copy any backup files for restore
+    if [ -d /restore ]
     then
-	cp /restore/* /var/www/html
-	chown -R www-data:www-data /var/www/html
+        if [ "(ls -A /restore)" ]
+        then
+	        cp /restore/* /var/www/html
+	        chown -R www-data:www-data /var/www/html
+        fi
     fi
+
+    a2enmod ssl
+    a2enconf ssl
+    ./generate_certs.sh
+
+    echo >&2 "========================================================================"
+    echo >&2
+    echo >&2 "This server is now configured to restore Joomla!"
+    echo >&2
+    echo >&2 "Navigate to http://localhost/kickstart.php to restore"
+    echo >&2 "You might need to add a port..."
+    echo >&2
+    echo >&2 "NOTE: You will need your database server address, database name,"
+    echo >&2 "and database user credentials to restore."
+    echo >&2
+    echo >&2 "JOOMLA_DB_HOST='$JOOMLA_DB_HOST'"
+    echo >&2 "JOOMLA_DB_USER='$JOOMLA_DB_USER'"
+    echo >&2 "JOOMLA_DB_PASSWORD='$JOOMLA_DB_PASSWORD'"
+    echo >&2 "JOOMLA_DB_NAME='$JOOMLA_DB_NAME'"
+    echo >&2
+    echo >&2 "If you have CiviCRM run civicrm-fix before navigating to front or back"
+    echo >&2
+    echo >&2 "========================================================================"
+
+else
+
+    echo >&2 "========================================================================"
+    echo >&2
+    echo >&2 "There is already a Joomla site ($SITE) in this container"
+    echo >&2
+    echo >&2 "Navigate to this containers http://localhost:{mapped_port}"
+    echo >&2
+    echo >&2 "JOOMLA_DB_HOST='$JOOMLA_DB_HOST'"
+    echo >&2 "JOOMLA_DB_USER='$JOOMLA_DB_USER'"
+    echo >&2 "JOOMLA_DB_PASSWORD='$JOOMLA_DB_PASSWORD'"
+    echo >&2 "JOOMLA_DB_NAME='$JOOMLA_DB_NAME'"
+    echo >&2
+    echo >&2 "========================================================================"
+
 fi
 
+<<<<<<< HEAD
 ./generate_certs.sh
 a2enmod ssl
 a2enconf ssl
@@ -70,3 +127,8 @@ echo >&2 "======================================================================
 service apache2 start
 
 sleep infinity
+=======
+service apache2 start
+
+tail -f /var/log/apache2/error.log -f /var/log/apache2/access.log
+>>>>>>> 15083d0 (Look for existing administrator directory and then do no kickstart)

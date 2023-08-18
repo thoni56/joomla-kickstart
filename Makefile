@@ -1,6 +1,6 @@
 USER = thoni56
 UBUNTU = jammy
-PHP = 8.0
+PHP = 8.2
 
 all:
 	UBUNTU=$(UBUNTU) PHP=$(PHP) envsubst '$$UBUNTU $$PHP $$USER' < Dockerfile.template > Dockerfile
@@ -13,4 +13,4 @@ all:
 NAME = `ls restore/site*.jpa | awk -F\- '{ printf "%s-%s",$$2,$$3 }'`
 
 run:
-	docker run -v $(PWD)/restore:/restore -p 80:80 -p 443:443 --name $(NAME) $(USER)/joomla-kickstart:$(UBUNTU)-$(PHP)
+	docker run -v $(PWD)/restore:/restore -p 80:80 -p 443:443 $(USER)/joomla-kickstart:$(UBUNTU)-$(PHP) --name $(NAME)

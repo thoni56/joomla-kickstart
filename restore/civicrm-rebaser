@@ -3,12 +3,18 @@
 # Rebase a CiviCRM installation by replacing relevant paths and URL:s in some settings files
 #
 
-# First argument should be an absolute path the root of the CMS installation, which is also
+if [ "$#" -ne 1 ]; then
+    echo "$0 <db_connection_string>"
+    exit
+fi
+
+# We assume we are in the root of the CMS installation, which is also
 # assumed to be what should be replaced in the configuration files
+# TODO: check for administrator subdirectory at least
 
-cms_root=$1
+cms_root=$(pwd)
 
-# Second argument should be the connection string for the database: user:password@host/database
+# Argument should be the connection string for the database: user:password@host/database
 sql_connection=$2
 
 # For Joomla
