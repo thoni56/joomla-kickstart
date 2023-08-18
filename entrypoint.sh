@@ -91,28 +91,6 @@ else
 
 fi
 
-<<<<<<< HEAD
-./generate_certs.sh
-a2enmod ssl
-a2enconf ssl
-service apache2 start
-
-echo >&2 "========================================================================"
-echo >&2
-echo >&2 "This server is now configured to restore Joomla!"
-echo >&2
-echo >&2 "Navigate to this containers http://localhost:{mapped_port}/kickstart.php"
-echo >&2
-echo >&2 "NOTE: You will need your database server address, database name,"
-echo >&2 "and database user credentials to restore."
-echo >&2
-echo >&2 "JOOMLA_DB_HOST='$JOOMLA_DB_HOST'"
-echo >&2 "JOOMLA_DB_USER='$JOOMLA_DB_USER'"
-echo >&2 "JOOMLA_DB_PASSWORD='$JOOMLA_DB_PASSWORD'"
-echo >&2 "JOOMLA_DB_NAME='$JOOMLA_DB_NAME'"
-echo >&2
-echo >&2 "========================================================================"
-
 service apache2 start
 
 tail -f /var/log/apache2/error.log -f /var/log/apache2/access.log
